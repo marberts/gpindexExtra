@@ -1,3 +1,3 @@
-export(geks, tornqvist_geks)
+export(geks, tornqvist_geks, fisher_geks, matched)
 
 import(gpindex)

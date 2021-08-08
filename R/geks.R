@@ -1,13 +1,12 @@
-geks <- function(f = geometric_index("Tornqvist")) {
-  index <- Vectorize(match.fun(f), 
-                     vectorize.args = c("p1", "p0", "q1", "q0"),
-                     USE.NAMES = FALSE)
+geks <- function(f) {
+  index <- match.fun(f)
   function(price, quantity, period, product, na.rm = FALSE) {
     if (gpindex:::different_lengths(price, quantity, period, product)) {
       stop("'price', 'quantity', 'period', and 'product' must be the same length")
     }
     period <- as.factor(period)
     n <- nlevels(period)
+    if (!n) return(structure(numeric(0), names = character(0)))
     price <- split(price, period)
     quantity <- split(quantity, period)
     product <- as.factor(product)
@@ -25,7 +24,8 @@ geks <- function(f = geometric_index("Tornqvist")) {
       m <- .mapply(match, list(product[s], product[i]), list(incomparables = NA))
       bp <- .mapply(`[`, list(price[i], m), list())
       bq <- .mapply(`[`, list(quantity[i], m), list())
-      c(index(price[s], bp, quantity[s], bq, na.rm = na.rm), pad)
+      ans <- .mapply(index, list(price[s], bp, quantity[s], bq), list(na.rm = na.rm))
+      c(unlist(ans), pad)
     })
     mat <- do.call(rbind, lt)
     # exploit time-reversal
@@ -35,4 +35,6 @@ geks <- function(f = geometric_index("Tornqvist")) {
   }
 }
 
-tornqvist_geks <- geks()
+tornqvist_geks <- geks(geometric_index("Tornqvist"))
+
+fisher_geks <- geks(fisher_index)
