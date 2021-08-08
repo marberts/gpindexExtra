@@ -1,0 +1,40 @@
+
+R version 4.1.0 (2021-05-18) -- "Camp Pontanezen"
+Copyright (C) 2021 The R Foundation for Statistical Computing
+Platform: x86_64-pc-linux-gnu (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+> library(gpindexExtra)
+Loading required package: gpindex
+> 
+> dat <- data.frame(price = 1:15, quantity = 1:15, period = 1:3, product = rep(1:5, each = 3))
+> 
+> #as.numeric(GEKSIndex(dat, "price", "quantity", "period", prodID = "product", window = 3))
+> all.equal(with(dat, tornqvist_geks(price, quantity, period, product)), 
++           c("1" = 1, "2" = 1.107331768121160, "3" = 1.217529850588242))
+[1] TRUE
+> 
+> #as.numeric(GEKSIndex(dat, "price", "quantity", "period", "fisher", prodID = "product", window = 3))
+> all.equal(with(dat, geks(fisher_index)(price, quantity, period, product)), 
++           c("1" = 1, "2" = 1.106291370758592, "3" = 1.215570623328200))
+[1] TRUE
+> 
+> #as.numeric(GEKSIndex(dat, "price", "quantity", "period", "walsh", prodID = "product", window = 3))
+> all.equal(with(dat, geks(arithmetic_index("Walsh1"))(price, quantity, period, product)), 
++           c("1" = 1, "2" = 1.105909525759052, "3" = 1.214852529874356))
+[1] TRUE
+> 
+> proc.time()
+   user  system elapsed 
+  0.345   0.227   0.310 

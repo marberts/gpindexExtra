@@ -1,0 +1,23 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file. -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  out.width = "100%"
+)
+```
+
+# Extras for Generalized Price and Quantity Indexes
+
+Extra functionality to enhance the Generalized Price and Quantity Indexes package.
+
+## Installation
+
+```{r, eval = FALSE}
+devtools::install_github("marberts/gpindexExtra")
+```
