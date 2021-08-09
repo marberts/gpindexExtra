@@ -2,6 +2,7 @@
 \alias{geks}
 \alias{tornqvist_geks}
 \alias{fisher_geks}
+\alias{balanced}
 
 \title{
 GEKS index
@@ -17,6 +18,8 @@ geks(f)
 tornqvist_geks(price, quantity, period, product, na.rm = FALSE)
 
 fisher_geks(price, quantity, period, product, na.rm = FALSE)
+
+balanced(f, ...)
 }
 
 \arguments{
@@ -25,18 +28,23 @@ fisher_geks(price, quantity, period, product, na.rm = FALSE)
 \item{period}{A factor, or something that can be coerced into one, that gives the corresponding time period for each element in \code{price} and \code{quantity}. The ordering of time periods follows the levels of \code{period} to agree with \code{\link[=cut.Date]{cut()}}.}
 \item{product}{A factor, or something that can be coerced into one, that gives the corresponding product identifier for each element in \code{price} and \code{quantity}.}
 \item{na.rm}{Should missing values for \code{price} and \code{quantity} be removed when calculating the index? By default missing values will return a missing value for the index.}
+\item{...}{Additional arguments to \code{f} for which missing values should \emph{not} be removed.}
+}
+
+\details{
+The \code{balanced()} operator is designed to address the note about missing values for \code{\link{price_index}}.
 }
 
 \value{
 \code{geks()} returns a function to calculate a GEKS index with the desired index-number formula.
 
 \code{tornqvist_geks()} and \code{fisher_geks()} both return a named numeric vector giving the value of the respective GEKS index with the first period as the base period.
+
+\code{balanced()} returns a function like \code{f}, except that missing values are balanced across \emph{all} inputs when \code{na.rm = TRUE}. This is like using \code{\link[=complete.cases]{complete.cases()}}.
 }
 
 \seealso{
 \code{\link{price_index}} for price-index functions that can be used in \code{geks()}.
-
-\code{\link{matched}} to control how missing data are handled (see the note in \code{\link{price_index}}).
 }
 
 \examples{
@@ -54,6 +62,6 @@ quantity[2] <- NA
 fisher_geks(price, quantity, period, product, na.rm = TRUE)
 
 # Remove records with any missing data
-fg <- geks(matched(fisher_index))
+fg <- geks(balanced(fisher_index))
 fg(price, quantity, period, product, na.rm = TRUE)
 }
