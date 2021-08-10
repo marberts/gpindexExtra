@@ -15,9 +15,9 @@ Calculate an inter-temporal GEKS price index.
 \usage{
 geks(f)
 
-tornqvist_geks(price, quantity, period, product, na.rm = FALSE)
+tornqvist_geks(price, quantity, period, product, n = nlevels(period), na.rm = FALSE)
 
-fisher_geks(price, quantity, period, product, na.rm = FALSE)
+fisher_geks(price, quantity, period, product, n = nlevels(period), na.rm = FALSE)
 
 balanced(f, ...)
 }
@@ -28,11 +28,14 @@ balanced(f, ...)
 \item{period}{A factor, or something that can be coerced into one, that gives the corresponding time period for each element in \code{price} and \code{quantity}. The ordering of time periods follows the levels of \code{period} to agree with \code{\link[=cut.Date]{cut()}}.}
 \item{product}{A factor, or something that can be coerced into one, that gives the corresponding product identifier for each element in \code{price} and \code{quantity}.}
 \item{na.rm}{Should missing values for \code{price} and \code{quantity} be removed when calculating the index? By default missing values will return a missing value for the index.}
+\item{n}{A number giving the length of the index series. For example, if there are 12 periods in \code{period}, setting \code{n = 2} gives the index for period 12 with period 11 as the base period. The default gives an index for each period in \code{period}, with the first period as the base. Values that are neither integers nor length 1 are silently truncated to a length 1 integer.}
 \item{...}{Additional arguments to \code{f} for which missing values should \emph{not} be removed.}
 }
 
 \details{
-The \code{balanced()} operator is designed to address the note about missing values for \code{\link{price_index}}.
+The GEKS index is described in chapter 7 of Balk (2008) and by Ivancic et al. (2011).
+
+The \code{balanced()} operator is designed to address the note about missing values in \code{\link{price_index}}.
 }
 
 \value{
@@ -41,6 +44,12 @@ The \code{balanced()} operator is designed to address the note about missing val
 \code{tornqvist_geks()} and \code{fisher_geks()} both return a named numeric vector giving the value of the respective GEKS index with the first period as the base period.
 
 \code{balanced()} returns a function like \code{f}, except that missing values are balanced across \emph{all} inputs when \code{na.rm = TRUE}. This is like using \code{\link[=complete.cases]{complete.cases()}}.
+}
+
+\references{
+Balk, B. M. (2008). \emph{Price and Quantity Index Numbers}. Cambridge University Press.
+
+Ivancic, L., Diewert, W. E., and Fox, K. J. (2011). Scanner data, time aggregation and the construction of price indexes. \emph{Journal of Econometrics}, 161(1): 24--35.
 }
 
 \seealso{
