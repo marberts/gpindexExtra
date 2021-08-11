@@ -15,9 +15,11 @@ Calculate an inter-temporal GEKS price index.
 \usage{
 geks(f)
 
-tornqvist_geks(price, quantity, period, product, n = nlevels(period), na.rm = FALSE)
+tornqvist_geks(price, quantity, period, product, 
+               window = nlevels(period), n = window - 1, na.rm = FALSE)
 
-fisher_geks(price, quantity, period, product, n = nlevels(period), na.rm = FALSE)
+fisher_geks(price, quantity, period, product, 
+            window = nlevels(period), n = window - 1, na.rm = FALSE)
 
 balanced(f, ...)
 }
@@ -27,8 +29,10 @@ balanced(f, ...)
 \item{price, quantity}{A numeric vector of prices/quantities.}
 \item{period}{A factor, or something that can be coerced into one, that gives the corresponding time period for each element in \code{price} and \code{quantity}. The ordering of time periods follows the levels of \code{period} to agree with \code{\link[=cut.Date]{cut()}}.}
 \item{product}{A factor, or something that can be coerced into one, that gives the corresponding product identifier for each element in \code{price} and \code{quantity}.}
+\item{window}{The length of the window. The default is a window that encompasses all periods in 
+\code{period}. Values that are neither integers nor length 1 are silently truncated to a length 1 integer.}
+\item{n}{A number giving the length of the index series. For example, if there are 13 periods in \code{window}, setting \code{n = 1} gives the index for period 13. The default gives an index for each period in \code{window}. Values that are neither integers nor length 1 are silently truncated to a length 1 integer.}
 \item{na.rm}{Should missing values for \code{price} and \code{quantity} be removed when calculating the index? By default missing values will return a missing value for the index.}
-\item{n}{A number giving the length of the index series. For example, if there are 12 periods in \code{period}, setting \code{n = 2} gives the index for period 12 with period 11 as the base period. The default gives an index for each period in \code{period}, with the first period as the base. Values that are neither integers nor length 1 are silently truncated to a length 1 integer.}
 \item{...}{Additional arguments to \code{f} for which missing values should \emph{not} be removed.}
 }
 
@@ -38,10 +42,10 @@ The GEKS index is described in chapter 7 of Balk (2008) and by Ivancic et al. (2
 The \code{balanced()} operator is designed to address the note about missing values in \code{\link{price_index}}.
 }
 
-\value{
+\value{d
 \code{geks()} returns a function to calculate a GEKS index with the desired index-number formula.
 
-\code{tornqvist_geks()} and \code{fisher_geks()} both return a named numeric vector giving the value of the respective GEKS index with the first period as the base period.
+\code{tornqvist_geks()} and \code{fisher_geks()} both return a list with a named numeric vector giving the value of the respective period-over-period GEKS index for each window.
 
 \code{balanced()} returns a function like \code{f}, except that missing values are balanced across \emph{all} inputs when \code{na.rm = TRUE}. This is like using \code{\link[=complete.cases]{complete.cases()}}.
 }
@@ -63,6 +67,8 @@ period <- rep(1:3, 2)
 product <- rep(letters[1:2], each = 3)
 
 tornqvist_geks(price, quantity, period, product)
+
+tornqvist_geks(price, quantity, period, product, window = 2)
 
 # Missing data
 quantity[2] <- NA

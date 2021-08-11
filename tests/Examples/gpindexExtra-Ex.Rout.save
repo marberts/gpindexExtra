@@ -43,22 +43,38 @@ Loading required package: gpindex
 > product <- rep(letters[1:2], each = 3)
 > 
 > tornqvist_geks(price, quantity, period, product)
-       1        2        3 
-1.000000 1.530869 2.106824 
+[[1]]
+       2        3 
+1.530869 1.376227 
+
+> 
+> tornqvist_geks(price, quantity, period, product, window = 2)
+[[1]]
+       2 
+1.520408 
+
+[[2]]
+       3 
+1.366822 
+
 > 
 > # Missing data
 > quantity[2] <- NA
 > 
 > # Use all non-missing data
 > fisher_geks(price, quantity, period, product, na.rm = TRUE)
-       1        2        3 
-1.000000 1.455853 1.995214 
+[[1]]
+       2        3 
+1.455853 1.370478 
+
 > 
 > # Remove records with any missing data
 > fg <- geks(balanced(fisher_index))
 > fg(price, quantity, period, product, na.rm = TRUE)
-       1        2        3 
-1.000000 1.403078 1.889882 
+[[1]]
+       2        3 
+1.403078 1.346954 
+
 > 
 > 
 > 
@@ -67,7 +83,7 @@ Loading required package: gpindex
 > cleanEx()
 > options(digits = 7L)
 > base::cat("Time elapsed: ", proc.time() - base::get("ptime", pos = 'CheckExEnv'),"\n")
-Time elapsed:  0.193 0.011 0.205 0 0 
+Time elapsed:  0.207 0.011 0.221 0 0 
 > grDevices::dev.off()
 null device 
           1 
