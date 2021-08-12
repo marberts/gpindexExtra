@@ -1,3 +1,5 @@
 export(geks, tornqvist_geks, fisher_geks, balanced)
 
 import(gpindex)
+
+importFrom(stats, complete.cases)

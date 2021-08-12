@@ -7,6 +7,8 @@ set.seed(1441)
 all.equal(fisher_geks(integer(0), numeric(0), logical(0), character(0)),
           list())
 
+tornqvist_geks(1:2, 1:2, letters[1:2], c(1, 1))
+
 # Compare with the GEKSIndex from IndexNumR
 dat <- data.frame(price = runif(65), quantity = rlnorm(65), period = 1:13, product = rep(1:5, each = 13))
 dat <- dat[c(65:60, 3:59, 1:2), ]

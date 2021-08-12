@@ -5,6 +5,7 @@ geks_matrix <- function(index, price, quantity, product, n, nper, na.rm) {
   # time-reversal property of the 'index' function
   rows <- seq_len(nper)
   lt <- lapply(rows, function(i) {
+    # only the last n + 1 rows are needed, so pad the top with 1s
     if (i < max(nper - n, 2)) return(rep_len(1, nper))
     js <- seq_len(i - 1)
     pad <- rep_len(1, nper - i + 1)
@@ -32,9 +33,9 @@ geks <- function(f) {
     nper <- nlevels(period)
     if (!nper) return(list())
     window <- to_scalar(window)
-    n <- to_scalar(n)
     if (window < 2) stop("'window' must be greater than or equal to 2")
     if (window > nper) stop("'window' must be less than the number of levels in 'period'")
+    n <- to_scalar(n)
     if (n < 1) stop("'n' must be greater than or equal to 1")
     if (n > window - 1) stop("'n' must be less than 'window' minus 1")
     price <- split(price, period)
@@ -43,8 +44,8 @@ geks <- function(f) {
     attributes(product) <- NULL # faster to match on integer codes
     product <- split(product, period)
     windows <- rolling_window(nper, window)
+    keep <- seq(window - n, window) # only the last n + 1 indexes in the window need to be kept
     res <- vector("list", length(windows))
-    keep <- seq(window - n, window)
     for (i in seq_along(res)) {
       w <- windows[[i]]
       mat <- geks_matrix(index, price[w], quantity[w], product[w], n, window, na.rm)
@@ -65,8 +66,7 @@ balanced <- function(f, ...) {
   function(..., na.rm = FALSE) {
     dots <- list(...)
     if (na.rm) {
-      keep <- !Reduce(`|`, lapply(dots, is.na))
-      dots <- lapply(dots, `[`, keep)
+      dots <- lapply(dots, `[`, complete.cases(...))
     }
     do.call(f, c(dots, nbargs))
   }
