@@ -42,26 +42,3 @@ all.equal(as.numeric(with(dat, geks(balanced(fisher_index))(price, quantity, per
 
 all.equal(cumprod(as.numeric(unlist(with(dat, geks(balanced(arithmetic_index("Walsh1")))(price, quantity, period, product, 2, na.rm = TRUE))))), 
           as.numeric(GEKSIndex(dat, "price", "quantity", "period", "walsh", prodID = "product", window = 2, splice = "movement")[2:13]))
-
-# Tests for grouped operator
-x <- c(1, NA, 3, 4)
-w <- c(NA, 1, 1, 2)
-v <- c(1, 2, NA, 4)
-
-all.equal(arithmetic_mean(x, w, na.rm = TRUE),
-          balanced(arithmetic_mean)(x, w, na.rm = TRUE))
-
-all.equal(arithmetic_mean(x, w),
-          balanced(arithmetic_mean)(x, w))
-
-all.equal(arithmetic_mean(x, w, na.rm = TRUE),
-          balanced(weighted.mean)(x, w, na.rm = TRUE))
-
-all.equal(balanced(fisher_mean)(x, v, w, na.rm = TRUE), 4)
-
-x <- c(1, NA, 3, 4)
-w <- c(1, NA, 1, 2)
-v <- c(1, 2, NA, 4)
-
-all.equal(balanced(fisher_mean)(x, v, w, na.rm = TRUE),
-          fisher_mean(c(1, 4), c(1, 4), c(1, 2)))

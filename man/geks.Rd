@@ -2,7 +2,6 @@
 \alias{geks}
 \alias{tornqvist_geks}
 \alias{fisher_geks}
-\alias{balanced}
 
 \title{
 GEKS index
@@ -20,8 +19,6 @@ tornqvist_geks(price, quantity, period, product,
 
 fisher_geks(price, quantity, period, product, 
             window = nlevels(period), n = window - 1, na.rm = FALSE)
-
-balanced(f, ...)
 }
 
 \arguments{
@@ -33,21 +30,16 @@ balanced(f, ...)
 \code{period}. Values that are neither integers nor length 1 are silently truncated to a length 1 integer.}
 \item{n}{A number giving the length of the index series for each window. For example, if there are 13 periods in \code{window}, setting \code{n = 1} gives the index for period 13. The default gives an index for each period in \code{window}. Values that are neither integers nor length 1 are silently truncated to a length 1 integer.}
 \item{na.rm}{Should missing values for \code{price} and \code{quantity} be removed when calculating the index? By default missing values will return a missing value for the index.}
-\item{...}{Additional arguments to \code{f} for which missing values should \emph{not} be removed.}
 }
 
 \details{
 The GEKS index is described in chapter 7 of Balk (2008) and by Ivancic et al. (2011).
-
-The \code{balanced()} operator is designed to address the note about missing values in \code{\link{price_index}}.
 }
 
 \value{
 \code{geks()} returns a function to calculate a GEKS index with the desired index-number formula.
 
 \code{tornqvist_geks()} and \code{fisher_geks()} both return a list with a named numeric vector giving the value of the respective period-over-period GEKS index for each window.
-
-\code{balanced()} returns a function like \code{f}, except that missing values are balanced across \emph{all} inputs when \code{na.rm = TRUE}. This is like using \code{\link[=complete.cases]{complete.cases()}}.
 }
 
 \references{

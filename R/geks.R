@@ -59,16 +59,3 @@ geks <- function(f) {
 tornqvist_geks <- geks(geometric_index("Tornqvist"))
 
 fisher_geks <- geks(fisher_index)
-
-balanced <- function(f, ...) {
-  f <- match.fun(f)
-  nbargs <- list(...)
-  function(..., na.rm = FALSE) {
-    dots <- list(...)
-    if (na.rm) {
-      dots <- lapply(dots, `[`, complete.cases(...))
-    }
-    do.call(f, c(dots, nbargs))
-  }
-}
-

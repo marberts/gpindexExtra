@@ -75,34 +75,6 @@ b
 +           as.numeric(GEKSIndex(dat, "price", "quantity", "period", "walsh", prodID = "product", window = 2, splice = "movement")[2:13]))
 [1] TRUE
 > 
-> # Tests for grouped operator
-> x <- c(1, NA, 3, 4)
-> w <- c(NA, 1, 1, 2)
-> v <- c(1, 2, NA, 4)
-> 
-> all.equal(arithmetic_mean(x, w, na.rm = TRUE),
-+           balanced(arithmetic_mean)(x, w, na.rm = TRUE))
-[1] TRUE
-> 
-> all.equal(arithmetic_mean(x, w),
-+           balanced(arithmetic_mean)(x, w))
-[1] TRUE
-> 
-> all.equal(arithmetic_mean(x, w, na.rm = TRUE),
-+           balanced(weighted.mean)(x, w, na.rm = TRUE))
-[1] TRUE
-> 
-> all.equal(balanced(fisher_mean)(x, v, w, na.rm = TRUE), 4)
-[1] TRUE
-> 
-> x <- c(1, NA, 3, 4)
-> w <- c(1, NA, 1, 2)
-> v <- c(1, 2, NA, 4)
-> 
-> all.equal(balanced(fisher_mean)(x, v, w, na.rm = TRUE),
-+           fisher_mean(c(1, 4), c(1, 4), c(1, 2)))
-[1] TRUE
-> 
 > proc.time()
    user  system elapsed 
   0.879   0.226   0.998 
