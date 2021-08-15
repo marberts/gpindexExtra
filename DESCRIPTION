@@ -5,7 +5,7 @@ Authors@R: c(
     person("Steve", "Martin", role = c("aut", "cre", "cph"), email = "stevemartin041@gmail.com")
     )
 Description: Extra functionality to enhance the Generalized Price and Quantity Indexes package.
-Depends: R (>= 3.5), gpindex (>= 0.3.4)
+Depends: R (>= 3.5), gpindex (>= 0.3.5)
 Suggests: IndexNumR (>= 0.3.0)
 License: MIT + file LICENSE
 Encoding: UTF-8
