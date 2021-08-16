@@ -8,7 +8,7 @@ GEKS index
 }
 
 \description{
-Calculate an inter-temporal GEKS price index.
+Calculate an inter-temporal GEKS price index, as described in chapter 7 of Balk (2008) and by Ivancic et al. (2011).
 }
 
 \usage{
@@ -30,10 +30,6 @@ fisher_geks(price, quantity, period, product,
 \code{period}. Values that are neither integers nor length 1 are silently truncated to a length 1 integer.}
 \item{n}{A number giving the length of the index series for each window. For example, if there are 13 periods in \code{window}, setting \code{n = 1} gives the index for period 13. The default gives an index for each period in \code{window}. Values that are neither integers nor length 1 are silently truncated to a length 1 integer.}
 \item{na.rm}{Should missing values for \code{price} and \code{quantity} be removed when calculating the index? By default missing values will return a missing value for the index.}
-}
-
-\details{
-The GEKS index is described in chapter 7 of Balk (2008) and by Ivancic et al. (2011).
 }
 
 \value{
